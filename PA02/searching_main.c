@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
+#include "searching.h"
+#include <math.h>
+
+int main(int argc, char *argv[])
+{
+  Node *list = NULL; 
+  Node *tree = NULL;
+  Node *s_list = NULL;
+  Node *b_tree = NULL;
+  Node *balanced_tree = NULL;
+  int a = 0;
+  int *Size = &a;
+  
+  if(argc != 5){
+    return EXIT_FAILURE;
+  }
+  //list = Load_File(argv[1], Size);
+  list = Load_File(argv[2], Size);
+  printf("Number of Nodes: %d\n", *Size);
+  //node_print(list);
+  s_list = Load_File(argv[2], Size);
+  tree = Construct_BST(list);
+  b_tree = Construct_BST(s_list);
+  Insertionsort(&b_tree);
+  balanced_tree = Balance_BST(b_tree);
+ 
+  
+  
+  int b = strcmp(argv[1], "b");
+  int e = strcmp(argv[1], "e");
+  int i = strcmp(argv[1], "i");
+  int o = strcmp(argv[1], "o");
+  long returned = 0;
+
+  if(b == 0){
+    returned = Print_BST_BF(argv[3], tree);
+  }
+  if(e == 0){
+    returned = Print_BST_Preorder(argv[3], tree);
+  }
+  if(i == 0){
+    returned = Print_BST_Inorder(argv[3], tree);
+  }
+  if(o == 0){
+    returned = Print_BST_Postorder(argv[3], tree);
+  }
+  
+  double one = 0;
+  double two = 0;
+  double three = 0;
+  double *N_Comp1 = &one;
+  double *N_Comp2 = &two;
+  double *N_Comp3 = &three;
+
+  int found1 = 0;
+  int found2 = 0;
+  int found3 = 0;
+  long keys = 0;
+  do {
+    scanf("%ld", &keys);
+    found1 = Search_List(list, keys, N_Comp1);
+    found2 = Search_Tree(tree, keys, N_Comp2);
+    found3 = Search_Tree(b_tree, keys, N_Comp3);
+    if((found1 || found2 || found3) && keys!=-1){
+      printf("found\n");
+    }
+    else {
+      if(keys == -1){
+	break;
+      }
+      printf("not found\n");
+    }
+  } while(keys != -1);
+  
+  //Insertionsort(&list);
+  //Balance_BST(tree);
+  //Print_BST_BF(argv[2], tree);
+  
+  FILE *output = fopen(argv[4], "w");
+  
+  fprintf(output, "List Number of Comparisons: %lf\n", *N_Comp1);
+  fprintf(output, "Tree Number of Comparisons: %lf\n", *N_Comp2);
+  fprintf(output, "Balanced Tree Number of Comparisons: %lf\n", *N_Comp3);
+
+
+  
+  fclose(output);
+  free_list(list);
+  free_list(s_list);
+  free_all(balanced_tree);
+  //free_all(b_tree);
+  //free_all(tree);
+  return EXIT_SUCCESS;
+}

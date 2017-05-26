@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
+#include "searching.h"
+
+
+int Is_Empty(stack *stack){
+  return(stack->top < 0);
+}
+
+int Push(stack *stack, Node *node){
+  if(stack->top >= MAX - 1){
+    return 0; 
+  }
+  stack->elements[++(stack->top)] = node;
+  return 1;
+}
+
+Node *Pop(stack *stack){
+  Node *node = NULL
+  node = stack->elements[stack->top];
+  stack->top--;
+  return node;
+}
+
+Node *Stacktop(stack *stack){
+  return(stack->elements[stack->top]);
+}
+
+Node *Stackin(stack *stack){
+  stack->top = -1;
+}

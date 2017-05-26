@@ -1,0 +1,3 @@
+List Number of Comparisons: 40.000000
+Tree Number of Comparisons: 22.000000
+Balanced Tree Number of Comparisons: 12.000000
